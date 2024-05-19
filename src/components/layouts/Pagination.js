@@ -6,10 +6,7 @@ import { changeCurrentPageAction } from '../../modules/categoryList';
 // console.log('CategoryListPage.js > PaginationContainer.js > Pagination.js');
 const Paging = ({ categories, pagination, search, loading }) => {
   const dispatch = useDispatch();
-  // console.log('categories : ', categories);
-  // console.log('pagination : ', pagination);
-  // console.log('loading : ', loading);
-  console.log('search : ', search);
+  console.log('CategoryListPage.js > PaginationContainer.js > Pagination.js');
 
   // if (loading) {
   //   console.log('Paging.js > loading : ', loading);
@@ -17,31 +14,12 @@ const Paging = ({ categories, pagination, search, loading }) => {
   // }
 
   const handleClick = (event, id) => {
-    console.log('event : ', event);
-    console.log('id : ', id);
     dispatch(changeCurrentPageAction(id));
-    // const selectedIndex = selected.indexOf(id);
-    // let newSelected = [];
-
-    // if (selectedIndex === -1) {
-    //   newSelected = newSelected.concat(selected, id);
-    // } else if (selectedIndex === 0) {
-    //   newSelected = newSelected.concat(selected.slice(1));
-    // } else if (selectedIndex === selected.length - 1) {
-    //   newSelected = newSelected.concat(selected.slice(0, -1));
-    // } else if (selectedIndex > 0) {
-    //   newSelected = newSelected.concat(
-    //     selected.slice(0, selectedIndex),
-    //     selected.slice(selectedIndex + 1),
-    //   );
-    // }
-    // setSelected(newSelected);
   };
 
   const paging = () => {
     const result = [];
     for (let i = pagination.startBlock; i <= pagination.endBlock; i++) {
-      // for (let i = 1; i <= pagination.totalCount; i++) {
       if (i > pagination.totalPage) {
         // result.push();
       } else {
@@ -66,7 +44,6 @@ const Paging = ({ categories, pagination, search, loading }) => {
   // 첫 페이지로 이동하기
   const moveFirst = () => {
     const result = [];
-    // if (pagination.startBlock === 1) {
     if (pagination.startPage === 1) {
       result.push(<Pagination.First disabled />);
     } else {
@@ -134,26 +111,6 @@ const Paging = ({ categories, pagination, search, loading }) => {
       {moveLast()}
     </Pagination>
   );
-
-  // return (
-  // <Pagination>
-  //   <Pagination.First />
-  //   <Pagination.Prev />
-  //   <Pagination.Item>{1}</Pagination.Item>
-  //   <Pagination.Ellipsis />
-
-  //   <Pagination.Item>{10}</Pagination.Item>
-  //   <Pagination.Item>{11}</Pagination.Item>
-  //   <Pagination.Item active>{12}</Pagination.Item>
-  //   <Pagination.Item>{13}</Pagination.Item>
-  //   <Pagination.Item disabled>{14}</Pagination.Item>
-
-  //   <Pagination.Ellipsis />
-  //   <Pagination.Item>{20}</Pagination.Item>
-  //   <Pagination.Next />
-  //   <Pagination.Last />
-  // </Pagination>
-  // );
 };
 
 export default Paging;

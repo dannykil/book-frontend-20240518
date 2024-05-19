@@ -25,7 +25,6 @@ const CategoryHeader = ({
   isRead,
   isEdit,
 }) => {
-  // const dispatch = useDispatch();
   console.log(
     'CategoryListPage.js > CategoryListContainer.js > CategoryHeader.js',
   );
@@ -46,18 +45,8 @@ const CategoryHeader = ({
   }
 
   var title = null;
-  // var search = (
-  //   <Form.Control
-  //     type="input"
-  //     placeholder="Category"
-  //     value={searchValue}
-  //     onChange={saveSearchValue}
-  //     // onChange={onChangeCategory}
-  //     // value={categoryName}
-  //   />
-  // );
-
   var component = null;
+
   if (isList) {
     title = 'List';
     component = (
@@ -101,15 +90,14 @@ const CategoryHeader = ({
             With supporting text below as a natural lead-in to additional
             content.
           </Card.Text>
-          {/* <Card.Text>{isList ? search : ''}</Card.Text> */}
           {component}{' '}
           {isList ? (
             <Searching
               placement={'end'}
-              // name={'Search'}
               name={'Category'}
               contents={categories}
               search={search}
+              filtering={filtering}
             >
               Search
             </Searching>

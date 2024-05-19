@@ -10,9 +10,7 @@ import CategoryItem from '../../components/category/CategoryItem';
 // console.log('CategoryListPage.js > CategoryListContainer.js');
 const CategoryListContainer = () => {
   console.log('CategoryListPage.js > CategoryListContainer.js');
-  // const { username } = useParams();
   const location = useLocation();
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const { categoryList, pagination, search, loading, error } = useSelector(
     ({ categoryList, loading, error }) => ({
@@ -25,51 +23,35 @@ const CategoryListContainer = () => {
     }),
   );
 
-  const filtering = () => {
-    // const result = []; // const로 선언하면 오류남(Assignment to constant variable.)
-    let result = [];
-    // let result = null;
-    if (categoryList !== null && search.categoryName !== null) {
-      console.log('filtering(categoryList) : ', categoryList);
+  // const filtering = () => {
+  //   // const result = []; // const로 선언하면 오류남(Assignment to constant variable.)
+  //   let result = [];
+  //   // let result = null;
+  //   if (categoryList !== null && search.categoryName !== null) {
+  //     console.log('CategoryListContainer > search : ', search);
+  //     // console.log('filtering(categoryList) : ', categoryList);
+  //     // console.log('search.categoryName : ', search.categoryName);
+  //     // console.log('CategoryListContainer > categoryList : ', categoryList);
+  //     // console.log('category.categoryName.includes : ', category.categoryName);
 
-      // result = categoryList.categories
-      result = categoryList
-        .filter((category) =>
-          category.categoryName.includes(search.categoryName),
-        )
-        .map((category) => (
-          <CategoryItem key={category.id} category={category} />
-        ));
+  //     // result = categoryList.categories
+  //     result = categoryList
+  //       .filter((category) =>
+  //         category.categoryName.includes(search.categoryName),
+  //       )
+  //       .map((category) => (
+  //         <CategoryItem key={category.id} category={category} />
+  //       ));
 
-      console.log('filtering(result) : ', result);
-    }
-    return result;
-  };
-
-  // const onRead = (id) => {
-  //   navigate(`/settings/category/` + id);
+  //     // console.log('filtering(result) : ', result);
+  //   }
+  //   return result;
   // };
 
-  // console.log('CategoryListContainer.js > loading : ', { loading });
-  console.log('CategoryListContainer.js > loading : ', loading);
-  // console.log(categoryList);
-  console.log('Out of useEffect : ', categoryList);
+  // console.log('Out of useEffect : ', categoryList);
   useEffect(() => {
-    console.log('In useEffect start : ', categoryList);
-    // console.log('CategoryListContainer.js > loading : ', loading);
-    // if (loading) {
-    //   console.log('CategoryListContainer.js > loading : ', loading);
-    //   return null;
-    // }
-    // dispatch(listCategory({ tag, username, page }));
-    // const { page } = qs.parse(location.search, {
-    //   ignoreQueryPrefix: true,
-    // });
-    // dispatch(categoryListAction(page));
+    // console.log('In useEffect start : ', categoryList);
     dispatch(categoryListAction());
-    // console.log(categoryList);
-    // dispatch(changeMenuAction('category', categoryList));
-    console.log('In useEffect end : ', categoryList);
   }, []);
 
   return (
@@ -79,7 +61,6 @@ const CategoryListContainer = () => {
         loading={loading}
         // onCancle={onCancle}
         // onPublish={onPublish}
-        filtering={filtering()}
         search={search}
         error={error}
         isList={true}

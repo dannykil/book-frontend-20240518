@@ -13,16 +13,6 @@ const CategoryList = ({ categories, onRead, loading, pagination, search }) => {
     return null;
   }
 
-  // const filtering = () => {
-  //   const result = [];
-  //   for (let i = pagination.startPage; i <= pagination.endPage; i++) {
-  //     if (pagination.currentPage === i) {
-  //       result.push(<CategoryItem key={category.id} category={category} />);
-  //     }
-  //   }
-  //   return result;
-  // };
-
   return (
     <>
       {!loading && categories && (
@@ -30,8 +20,11 @@ const CategoryList = ({ categories, onRead, loading, pagination, search }) => {
           {categories
             .filter(
               (category, i) =>
-                i + 1 >= pagination.startPage && i + 1 <= pagination.endPage,
-              // category.categoryName.includes(search.categoryName),
+                i + 1 >= pagination.startPage &&
+                i + 1 <= pagination.endPage &&
+                category.categoryName.includes(search.categoryName) &&
+                category.insertDT.includes(search.insertDT),
+              // && (category.insertDT >= search.insertDT && category.insertDT <= search.insertDT)
             )
             .map((category) => (
               <CategoryItem

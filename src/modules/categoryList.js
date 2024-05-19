@@ -30,6 +30,11 @@ export const changeCurrentPageAction = createAction(
 export const searchCategoryListAction = createAction(
   SEARCH_LIST_CATEGORY,
   (search) => search,
+  // (categoryName, insertDT) => (categoryName, insertDT),
+  // ({ categoryName, insertDT }) => ({ categoryName, insertDT }),
+  // (categoryNameValue, insertDTValue) => (categoryNameValue, insertDTValue),
+  // (categoryName) => categoryName,
+  // (searchItem, searchValue) => (searchItem, searchValue),
 );
 
 const listCategorySaga = createRequestSaga(
@@ -59,7 +64,8 @@ const initialState = {
     startPage: 1,
     endPage: 5,
   },
-  search: { categoryName: null, insertDT: null },
+  // search: { categoryName: null, insertDT: null },
+  search: { categoryName: '', insertDT: '' },
 };
 // blockPage: 5, // 한페이지에 보여주는 페이지 블럭 수
 //   pageRow: 5, // 한페이지에 보여주는 글 수
@@ -112,12 +118,20 @@ const categoryList = handleActions(
         endPage: (page - 1) * 5 + 5,
       },
     }),
-    [SEARCH_LIST_CATEGORY]: (state, { payload: categoryName }) => ({
+    [SEARCH_LIST_CATEGORY]: (state, { payload: search }) => ({
       ...state,
-      search: {
-        categoryName: categoryName,
-      },
+      search: search,
     }),
+    // [SEARCH_LIST_CATEGORY]: (
+    //   state,
+    //   { payload: { categoryName, insertDT } },
+    // ) => ({
+    //   ...state,
+    //   search: {
+    //     categoryName: categoryName,
+    //     insertDT: insertDT,
+    //   },
+    // }),
   },
   initialState,
 );
