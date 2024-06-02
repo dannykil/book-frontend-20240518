@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CategoryItem from './CategoryItem';
 
 // console.log('CategoryListPage.js > CategoryListContainer.js > CategoryList.js');
@@ -6,6 +6,8 @@ const CategoryList = ({ categories, onRead, loading, pagination, search }) => {
   console.log(
     'CategoryListPage.js > CategoryListContainer.js > CategoryList.js',
   );
+  // console.log('Date(search.insertDT) : ', '2024-05-19' > search.insertDT);
+  // console.log('search.insertDT : ', search.insertDT);
   // console.log('search.categoryName : ', search.categoryName);
 
   if (loading) {
@@ -23,7 +25,7 @@ const CategoryList = ({ categories, onRead, loading, pagination, search }) => {
                 i + 1 >= pagination.startPage &&
                 i + 1 <= pagination.endPage &&
                 category.categoryName.includes(search.categoryName) &&
-                category.insertDT.includes(search.insertDT),
+                category.insertDT >= search.insertDT,
               // && (category.insertDT >= search.insertDT && category.insertDT <= search.insertDT)
             )
             .map((category) => (

@@ -9,6 +9,7 @@ import {
   writeCategory,
 } from '../../modules/categoryWrite';
 import CategoryHeader from '../../components/category/CategoryHeader';
+import { categoryListAction } from '../../modules/categoryList';
 
 const CategoryWriteContainer = () => {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const CategoryWriteContainer = () => {
     );
     dispatch(categoryWriteUnload());
     navigate(`/settings/category`);
+    dispatch(categoryListAction());
   };
 
   const onCancle = () => {

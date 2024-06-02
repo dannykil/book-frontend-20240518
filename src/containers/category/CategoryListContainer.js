@@ -5,7 +5,6 @@ import CategoryList from '../../components/category/CategoryList';
 import { categoryListAction } from '../../modules/categoryList';
 import CategoryHeader from '../../components/category/CategoryHeader';
 import Paging from '../../components/layouts/Pagination';
-import CategoryItem from '../../components/category/CategoryItem';
 
 // console.log('CategoryListPage.js > CategoryListContainer.js');
 const CategoryListContainer = () => {
@@ -48,8 +47,25 @@ const CategoryListContainer = () => {
   //   return result;
   // };
 
+  // API 데이터 호출 함수
+  // const dataApi = async () => {
+  //   const rankApi = await fetcher(METHOD.GET, `/domestic/rank`);
+  //         setRankList(rankApi.data);
+  // };
+  const dataApi = () => {
+    dispatch(categoryListAction());
+  };
+
   // console.log('Out of useEffect : ', categoryList);
   useEffect(() => {
+    // let polling = setInterval(() => {
+    //   dataApi();
+    // }, 60 * 60 * 1000);
+
+    // // 페이지에 벗어날 경우 polling X
+    // return () => {
+    //   clearInterval(polling);
+    // };
     // console.log('In useEffect start : ', categoryList);
     dispatch(categoryListAction());
   }, []);

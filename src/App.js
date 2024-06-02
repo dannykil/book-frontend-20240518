@@ -20,6 +20,7 @@ import CategoryWritePage from './pages/settings/category/CategoryWritePage';
 import CategoryListPage from './pages/settings/category/CategoryListPage';
 import CategoryReadPage from './pages/settings/category/CategoryReadPage';
 import CategoryEditPage from './pages/settings/category/CategoryEditPage';
+import ChatPage from './pages/settings/chat/ChatPage';
 // import debug from 'debug';
 // const authLogger = debug('auth');
 var debug = require('debug')('http'),
@@ -81,6 +82,7 @@ function App() {
           exact={true}
           element={<CategoryEditPage />}
         />
+        <Route path="/chat" exact={true} element={<ChatPage />} />
         <Route path="/booklist" exact={true} element={<BookList />} />
         <Route path="/saveForm" exact={true} element={<SaveForm />} />
         <Route path="/book/:id" exact={true} element={<Detail />} />

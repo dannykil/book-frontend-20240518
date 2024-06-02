@@ -13,22 +13,43 @@ const Searching = ({ name, filtering, ...props }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [searchValue, setSearchValue] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  // const [selectedDate, setSelectedDate] =
+  //   (useState < Date) | (null > new Date());
 
   const setSearchingItems = () => {
     const searchItems = Object.keys(props.search);
     const result = [];
 
     for (const key in Object.keys(props.search)) {
-      result.push(
-        <Form.Control
-          type="input"
-          name={Object.keys(props.search)[key]}
-          className="mb-2"
-          placeholder={'Insert ' + Object.keys(props.search)[key]}
-          // value={searchValue}
-          onChange={saveSearchValue}
-        />,
-      );
+      if (Object.keys(props.search)[key] === 'insertDT') {
+        result.push(
+          <ReactDatePicker
+            name={Object.keys(props.search)[key]}
+            placeholder={'Insert ' + Object.keys(props.search)[key]}
+            dateFormat="yyyy-MM-dd" // 날짜 형태
+            shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
+            minDate={new Date('2000-01-01')} // minDate 이전 날짜 선택 불가
+            maxDate={new Date()} // maxDate 이후 날짜 선택 불가
+            // selected={selectedDate}
+            // onChange={(date) => setSelectedDate(date)}
+            selected={insertDT}
+            onChange={(date) => setInsertDT(date)}
+            customInput={<Form.Control />}
+          />,
+        );
+      } else {
+        result.push(
+          <Form.Control
+            type="input"
+            name={Object.keys(props.search)[key]}
+            className="mb-2"
+            placeholder={'Insert ' + Object.keys(props.search)[key]}
+            // value={searchValue}
+            onChange={saveSearchValue}
+          />,
+        );
+      }
     }
 
     // if (searchItems.length > 0) {
@@ -77,12 +98,19 @@ const Searching = ({ name, filtering, ...props }) => {
   };
 
   const handleClick = (event, value) => {
-    let search = { categoryName: categoryName, insertDT: insertDT };
     // console.log('event : ', event);
     // console.log('value : ', value);
+    const inputDate = new Date(insertDT);
+    const year = inputDate.getFullYear();
+    const month = (inputDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = inputDate.getDate().toString().padStart(2, '0');
+    const formattedDateString = `${year}-${month}-${day}`;
+
     console.log('Searching > handleClick() ');
     console.log('categoryName : ', categoryName);
-    console.log('insertDT : ', insertDT);
+    console.log('insertDT : ', formattedDateString);
+
+    let search = { categoryName: categoryName, insertDT: formattedDateString };
     // dispatch(searchCategoryListAction(categoryName, insertDT));
     dispatch(searchCategoryListAction(search));
     setShow(false);
@@ -94,7 +122,9 @@ const Searching = ({ name, filtering, ...props }) => {
     if (event.target.name === 'categoryName') {
       setCategoryName(event.target.value);
     } else {
-      setInsertDT(event.target.value);
+      // console.log(insertDT);
+      // setInsertDT(event.target.value);
+      // setSelectedDate(event.target.value);
     }
   };
 
