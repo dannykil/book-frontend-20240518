@@ -1,41 +1,68 @@
 import React from 'react';
-import { Alert, Button, Card, Form } from 'react-bootstrap';
+import { Alert, Card, Form } from 'react-bootstrap';
 
-const ChatRoom = ({ saveMsg, sessionId, send }) => {
+const ChatRoom = ({
+  saveMsg,
+  sessionId,
+  result,
+  keyDown,
+  msg,
+  messageEndRef,
+}) => {
+  console.log('---------- ChatRoom');
+  console.log('---------- ChatRoom result : ', result);
+  //   console.log('ChatRoom result.length : ', result.length);
+  //   console.log('ChatRoom result : ', result);
+  //   console.log('ChatRoom userName : ', userName);
+  //   console.log('ChatRoom msg : ', msg);
+  //   console.log('ChatRoom ws : ', ws);
+
+  //   document.addEventListener('keypress', function (e) {
+  //     //   console.log('addEventListener : ', e);
+  //     if (e.keyCode === 13) {
+  //       //enter press
+  //       send();
+  //     }
+  //   });
+
   return (
     <Card className="text-center">
       <Card.Header>Featured</Card.Header>
       <Card.Body id="chatContents">
-        {/* <Card.Title>Special title treatment</Card.Title> */}
-        <Card.Text style={{ textAlign: 'left' }}>
-          hi
-          <Alert
-            key={1}
-            variant="secondary"
-            style={{
-              textAlign: 'left',
-              fontSize: '1rem',
-              padding: '0.5rem',
-            }}
-          >
-            This is a primary alert
-            {/* <Alert.Link href="#">an example link</Alert.Link> */}
-          </Alert>
-        </Card.Text>
-        <Card.Text style={{ textAlign: 'right' }}>
-          hi
-          <Alert
-            key={1}
-            variant="primary"
-            style={{
-              textAlign: 'right',
-              fontSize: '1rem',
-              padding: '0.5rem',
-            }}
-          >
-            This is a primary alert
-          </Alert>
-        </Card.Text>
+        {result.map((item, index) =>
+          item.me ? (
+            <Card.Text style={{ textAlign: 'right' }}>
+              {item.userName}
+              <Alert
+                key={index}
+                variant="primary"
+                style={{
+                  textAlign: 'right',
+                  fontSize: '1rem',
+                  padding: '0.5rem',
+                }}
+              >
+                {item.msg}
+              </Alert>
+            </Card.Text>
+          ) : (
+            <Card.Text style={{ textAlign: 'left' }}>
+              {item.userName}
+              <Alert
+                key={index}
+                variant="dark"
+                style={{
+                  textAlign: 'left',
+                  fontSize: '1rem',
+                  padding: '0.5rem',
+                }}
+              >
+                {item.msg}
+              </Alert>
+            </Card.Text>
+          ),
+        )}
+        <div ref={messageEndRef}></div>
       </Card.Body>
       <Card.Footer className="text-muted">
         {/* 핸드폰의 경우는 엔터입력을 어떻게 해야하나? */}
@@ -43,6 +70,8 @@ const ChatRoom = ({ saveMsg, sessionId, send }) => {
           type="input"
           placeholder="Press Enter to Send Message"
           onChange={saveMsg}
+          onKeyDown={keyDown}
+          value={msg}
         />
         <Form.Control
           type="hidden"
@@ -50,9 +79,9 @@ const ChatRoom = ({ saveMsg, sessionId, send }) => {
           value={sessionId}
           disabled
         />
-        <Button variant="primary" onClick={send}>
+        {/* <Button variant="primary" onClick={send}>
           Send
-        </Button>
+        </Button> */}
       </Card.Footer>
     </Card>
   );
