@@ -84,7 +84,7 @@ const CategoryHeader = ({
   return (
     <>
       <Card className="mb-2">
-        <Card.Header as="h3">Category {title}</Card.Header>
+        <Card.Header as="h3">Category {title}1</Card.Header>
         <Card.Body>
           <Card.Text>
             With supporting text below as a natural lead-in to additional
