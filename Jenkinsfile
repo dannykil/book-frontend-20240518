@@ -10,8 +10,8 @@ pipeline {
             steps {
                 dir('./') {
                     echo '########## project build ##########'
-                    sh 'npm install' // npm install을 실행하고 
-                    sh 'CI=false npm run build' // npm run build를 실행한다.
+                    // sh 'npm install' // npm install을 실행하고 
+                    // sh 'CI=false npm run build' // npm run build를 실행한다.
                 }
             }
         }
@@ -50,7 +50,21 @@ pipeline {
                 // sh "docker stop ${ret}"
                 // sh 'docker stop \$(docker ps -qa)'
                 // sh "docker stop $(docker ps -qa)"
-                sh "docker stop \$(docker ps -qa)"
+                // sh "docker stop \$(docker ps -qa)"
+
+                script {
+                    result = sh 'docker ps -qa'
+                    
+                    if (result == ''){
+                        echo 'result is null'
+                    }
+                    else {
+                        echo 'result is not null'
+                        echo ${result}
+                        sh "docker stop \$(docker ps -qa)"
+                    }
+                    
+                }
                 
 
                 echo '# 2) Deleting all of the containers'
