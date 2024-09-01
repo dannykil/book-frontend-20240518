@@ -30,7 +30,7 @@ pipeline {
             }
         }
 
-        stage('docker initialize') {
+        stage('docker initialize1') {
             steps {
                 dir('/root/docker') {
                     echo '########## docker initialize using script in other folder ##########'
@@ -39,7 +39,7 @@ pipeline {
             }
         }
 
-        stage('docker initialize') {
+        stage('docker initialize2') {
             steps {
                 echo '########## docker initialize on CI/CD Server ##########'
                 echo '# 1) Stopping all of the containers'
