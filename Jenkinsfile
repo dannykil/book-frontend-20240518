@@ -59,8 +59,13 @@ pipeline {
                         echo 'result is null'
                     }
                     else {
+                        // time="2024-08-27T09:05:40+09:00" level=warning msg="The cgroupv2 manager is set to systemd but there is no systemd user session available"
+                        // time="2024-08-27T09:05:40+09:00" level=warning msg="For using systemd, you may need to log in using a user session"
+                        // time="2024-08-27T09:05:40+09:00" level=warning msg="Alternatively, you can enable lingering with: `loginctl enable-linger 987` (possibly as root)"
+                        // 위와 같은 에러코드가 발생하면 젠킨스 서버에 아래의 명령어 실행
+                        // loginctl enable-linger 987
                         echo 'result is not null'
-                        echo ${result}
+                        echo result
                         sh "docker stop \$(docker ps -qa)"
                     }
                     
