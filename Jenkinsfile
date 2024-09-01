@@ -6,9 +6,25 @@ pipeline {
     }
     
     stages {
-        stage('git clone') {
+        stage('project build') {
             steps {
-                echo 'git clone'
+                dir('./') {
+                    echo 'project build'
+                    sh 'npm install' // npm install을 실행하고 
+                    sh 'CI=false npm run build' // npm run build를 실행한다.
+                }
+            }
+        }
+
+        stage('image build') {
+            steps {
+                echo 'image build'
+            }
+        }
+
+        stage('image push') {
+            steps {
+                echo 'image push'
             }
         }
     }
