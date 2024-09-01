@@ -57,17 +57,13 @@ pipeline {
                 echo '# 2) Deleting all of the containers (not using anymore)'
                 // sh 'docker rm \$(docker ps -qa)'
 
-                script {
-                    sh 'docker images -qa'
-                }
-
                 echo '# 3) Deleteing all of the images'
                 // sh 'docker rmi \$(docker images -qa)'
                 // sh "docker rmi $(docker images -qa)"
                 // sh "docker rmi \$(docker images -qa)"
                 // sh 'docker rmi \$(docker images -qa)'
                 // sh '''docker rmi \$(docker images -qa)'''
-                sh 'docker images -qa'
+                sh 'docker images'
 
                 echo '# 4) Deleteing all of the volumes'
                 sh 'docker volume rm \$(docker volume ls -qf dangling=true)'
