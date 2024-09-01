@@ -44,12 +44,11 @@ pipeline {
         stage('docker initialize2') {
             steps {
                 echo '########## docker initialize on CI/CD Server ##########'
-                // def ret = sh(script: 'docker ps -qa', returnStdout: true)
-                // echo ret
-                // sh "docker stop ${ret}"
-                // sh 'docker stop \$(docker ps -qa)'
-                // sh "docker stop $(docker ps -qa)"
-                // sh "docker stop \$(docker ps -qa)"
+                // time="2024-08-27T09:05:40+09:00" level=warning msg="The cgroupv2 manager is set to systemd but there is no systemd user session available"
+                // time="2024-08-27T09:05:40+09:00" level=warning msg="For using systemd, you may need to log in using a user session"
+                // time="2024-08-27T09:05:40+09:00" level=warning msg="Alternatively, you can enable lingering with: `loginctl enable-linger 987` (possibly as root)"
+                // 위와 같은 에러코드가 발생하면 젠킨스 서버에 아래의 명령어 실행
+                // loginctl enable-linger 987
 
                 echo '# 1) Stopping all of the containers (not using anymore)'
                 // sh "docker stop \$(docker ps -qa)"
@@ -66,55 +65,16 @@ pipeline {
                 sh 'sudo docker images'
 
                 echo '# 4) Deleteing all of the volumes'
-                sh 'docker volume rm \$(docker volume ls -qf dangling=true)'
+                sh 'sudo docker volume rm \$(docker volume ls -qf dangling=true)'
 
                 echo '# 5) Deleteing all of configurations like network'
-                sh 'docker system prune -f'
+                sh 'sudo docker system prune -f'
 
                 echo '# 6) Check results'
-                sh 'docker ps -a'
-                sh 'docker images'
-                sh 'docker volume ls'
-                sh 'docker network ls'
-
-                script {
-                    // result = sh 'docker ps -qa'
-                    // result = sh 'docker images -qa'
-                    
-                    if (result == null){
-                        echo 'result is null'
-                        echo 'Skipping initiating docker'
-                    }
-                    else {
-                        // time="2024-08-27T09:05:40+09:00" level=warning msg="The cgroupv2 manager is set to systemd but there is no systemd user session available"
-                        // time="2024-08-27T09:05:40+09:00" level=warning msg="For using systemd, you may need to log in using a user session"
-                        // time="2024-08-27T09:05:40+09:00" level=warning msg="Alternatively, you can enable lingering with: `loginctl enable-linger 987` (possibly as root)"
-                        // 위와 같은 에러코드가 발생하면 젠킨스 서버에 아래의 명령어 실행
-                        // loginctl enable-linger 987
-                        echo 'result is not null'
-
-                        echo '# 1) Stopping all of the containers (not using anymore)'
-                        // sh "docker stop \$(docker ps -qa)"
-
-                        echo '# 2) Deleting all of the containers (not using anymore)'
-                        // sh 'docker rm \$(docker ps -qa)'
-
-                        echo '# 3) Deleteing all of the images'
-                        sh 'docker rmi \$(docker images -qa)'
-
-                        echo '# 4) Deleteing all of the volumes'
-                        sh 'docker volume rm \$(docker volume ls -qf dangling=true)'
-
-                        echo '# 5) Deleteing all of configurations like network'
-                        sh 'docker system prune -f'
-
-                        echo '# 6) Check results'
-                        sh 'docker ps -a'
-                        sh 'docker images'
-                        sh 'docker volume ls'
-                        sh 'docker network ls'
-                    }   
-                }
+                sh 'sudo docker ps -a'
+                sh 'sudo docker images'
+                sh 'sudo docker volume ls'
+                sh 'sudo docker network ls'
             }
         }
     }
