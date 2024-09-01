@@ -51,9 +51,30 @@ pipeline {
                 // sh "docker stop $(docker ps -qa)"
                 // sh "docker stop \$(docker ps -qa)"
 
+                echo '# 1) Stopping all of the containers (not using anymore)'
+                // sh "docker stop \$(docker ps -qa)"
+
+                echo '# 2) Deleting all of the containers (not using anymore)'
+                // sh 'docker rm \$(docker ps -qa)'
+
+                echo '# 3) Deleteing all of the images'
+                sh 'docker rmi \$(docker images -qa)'
+
+                echo '# 4) Deleteing all of the volumes'
+                sh 'docker volume rm \$(docker volume ls -qf dangling=true)'
+
+                echo '# 5) Deleteing all of configurations like network'
+                sh 'docker system prune -f'
+
+                echo '# 6) Check results'
+                sh 'docker ps -a'
+                sh 'docker images'
+                sh 'docker volume ls'
+                sh 'docker network ls'
+
                 script {
                     // result = sh 'docker ps -qa'
-                    result = sh 'docker images -qa'
+                    // result = sh 'docker images -qa'
                     
                     if (result == null){
                         echo 'result is null'
