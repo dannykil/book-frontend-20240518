@@ -64,8 +64,9 @@ pipeline {
                 // sh '''docker rmi \$(docker images -qa)'''
                 // sh 'sudo docker images'
                 script {
-                    // result = sh 'sudo docker images -qa'
-                    if (sh 'sudo docker images -qa' == null){
+                    result = sh 'sudo docker images -qa'
+                    echo result
+                    if (result == null){
                         echo 'image is null'
                     }
                     else {
