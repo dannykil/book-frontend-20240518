@@ -52,10 +52,12 @@ pipeline {
                 // sh "docker stop \$(docker ps -qa)"
 
                 script {
-                    result = sh 'docker ps -qa'
+                    // result = sh 'docker ps -qa'
+                    result = sh 'docker images -qa'
                     
                     if (result == null){
                         echo 'result is null'
+                        echo 'Skipping initiating docker'
                     }
                     else {
                         // time="2024-08-27T09:05:40+09:00" level=warning msg="The cgroupv2 manager is set to systemd but there is no systemd user session available"
@@ -64,13 +66,12 @@ pipeline {
                         // 위와 같은 에러코드가 발생하면 젠킨스 서버에 아래의 명령어 실행
                         // loginctl enable-linger 987
                         echo 'result is not null'
-                        // echo result
-                        
-                        echo '# 1) Stopping all of the containers'
-                        sh "docker stop \$(docker ps -qa)"
 
-                        echo '# 2) Deleting all of the containers'
-                        sh 'docker rm \$(docker ps -qa)'
+                        echo '# 1) Stopping all of the containers (not using anymore)'
+                        // sh "docker stop \$(docker ps -qa)"
+
+                        echo '# 2) Deleting all of the containers (not using anymore)'
+                        // sh 'docker rm \$(docker ps -qa)'
 
                         echo '# 3) Deleteing all of the images'
                         sh 'docker rmi \$(docker images -qa)'
