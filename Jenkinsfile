@@ -45,10 +45,8 @@ pipeline {
             steps {
                 echo '########## docker initialize on CI/CD Server ##########'
                 echo '# 1) Stopping all of the containers'
-                def ret = sh(script: 'docker ps -qa', returnStdout: true)
-                echo ret
-                // sh 'docker stop \$(docker ps -qa)'
-                sh "docker stop ${ret}"
+                sh 'docker stop $(docker ps -qa)'
+                
 
                 echo '# 2) Deleting all of the containers'
                 // sh 'docker rm \$(docker ps -qa)'
