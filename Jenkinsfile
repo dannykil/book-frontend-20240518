@@ -65,15 +65,16 @@ pipeline {
                 sh 'sudo docker images'
 
                 echo '# 4) Deleteing all of the volumes'
-                result = sh 'sudo docker volume ls -qf dangling=true'
-                if (result == null){
-                    echo 'volume is null'
-                }
-                else {
-                    sh 'sudo docker volume ls -qf dangling=true'
-                    sh 'sudo docker volume rm \$(sudo docker volume ls -qf dangling=true)'
-                }
-                
+                script {
+                    result = sh 'sudo docker volume ls -qf dangling=true'
+                    if (result == null){
+                        echo 'volume is null'
+                    }
+                    else {
+                        sh 'sudo docker volume ls -qf dangling=true'
+                        sh 'sudo docker volume rm \$(sudo docker volume ls -qf dangling=true)'
+                    }
+                }                
 
                 echo '# 5) Deleteing all of configurations like network'
                 sh 'sudo docker system prune -f'
