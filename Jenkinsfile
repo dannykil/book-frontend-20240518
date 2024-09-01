@@ -43,16 +43,16 @@ pipeline {
             steps {
                 echo '########## docker initialize on CI/CD Server ##########'
                 echo '# 1) Stopping all of the containers'
-                sh 'docker stop $(docker ps -qa)'
+                sh "docker stop $(docker ps -qa)" // 특수문자를 적용하기 위해서는 Double Quotation을 사용해야한다
 
                 echo '# 2) Deleting all of the containers'
-                sh 'docker rm $(docker ps -qa)'
+                sh "docker rm $(docker ps -qa)"
 
                 echo '# 3) Deleteing all of the images'
-                sh 'docker rmi $(docker images -qa)'
+                sh "docker rmi $(docker images -qa)"
 
                 echo '# 4) Deleteing all of the volumes'
-                sh 'docker volume rm $(docker volume ls -qf dangling=true)'
+                sh "docker volume rm $(docker volume ls -qf dangling=true)"
 
                 echo '# 5) Deleteing all of configurations like network'
                 sh 'docker system prune -f'
