@@ -55,7 +55,7 @@ pipeline {
                 script {
                     result = sh 'docker ps -qa'
                     
-                    if (result == ''){
+                    if (result == null){
                         echo 'result is null'
                     }
                     else {
