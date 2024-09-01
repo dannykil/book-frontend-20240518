@@ -63,6 +63,16 @@ pipeline {
                 // sh 'docker rmi \$(docker images -qa)'
                 // sh '''docker rmi \$(docker images -qa)'''
                 sh 'sudo docker images'
+                script {
+                    result = sh 'sudo docker images -qa'
+                    if (result == null){
+                        echo 'image is null'
+                    }
+                    else {
+                        sh 'sudo docker images -qa'
+                        sh 'sudo docker rmi \$(sudo docker images -qa)'
+                    }
+                }
 
                 echo '# 4) Deleteing all of the volumes'
                 script {
