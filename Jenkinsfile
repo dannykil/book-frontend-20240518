@@ -6,34 +6,9 @@ pipeline {
     }
     
     stages {
-        stage('clone') {
+        stage('git clone') {
             steps {
-                // git url: "https://github.com/dannykil/book-frontend-20240518.git",
-                //     branch: "master"
-                    // credentialsId: "$REPOSITORY_CREDENTIAL_ID"
-            }
-            // post {
-            //     success {
-            //         echo 'success clone project'
-            //     }
-            //     failure {
-            //         error 'fail clone project' // exit pipeline
-            //     }
-            // }
-        }
-        stage('build') {  // react를 빌드하는 코드 적기
-            steps {
-                dir('./') { // gitlab의 forntend라는 branch에서
-                    // sh 'npm install' // npm install을 실행하고 
-                    // sh 'CI=false npm run build' // npm run build를 실행한다.
-                }
-            }
-        }
-        stage('container build and deploy') {
-            steps {
-                dir('./') {
-                    // sh 'sudo ./deploy_container_frontend.sh'
-                }
+                echo 'git clone'
             }
         }
     }
