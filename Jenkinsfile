@@ -19,14 +19,14 @@ pipeline {
         stage('image build') {
             steps {
                 echo '########## image build ##########'
-                sh 'docker build -t dannielkil/book-frontend .'
+                sh 'sudo docker build -t dannielkil/book-frontend .'
             }
         }
 
         stage('image push') {
             steps {
                 echo '########## image push ##########'
-                sh 'docker push dannielkil/book-frontend'
+                sh 'sudo docker push dannielkil/book-frontend'
             }
         }
 
