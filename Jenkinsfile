@@ -32,10 +32,12 @@ pipeline {
 
         stage('docker initialize1') {
             steps {
-                dir('/cicd/docker') {
-                    echo '########## docker initialize using script in other folder ##########'
-                    sh './reset-all.sh'
-                }
+                // dir('/cicd/docker') {
+                //     echo '########## docker initialize using script in other folder ##########'
+                //     sh './reset-all.sh'
+                // }
+                echo '########## docker initialize using script in other folder ##########'
+                sh '/cicd/docker/reset-all.sh'
             }
         }
 
@@ -43,16 +45,16 @@ pipeline {
             steps {
                 echo '########## docker initialize on CI/CD Server ##########'
                 echo '# 1) Stopping all of the containers'
-                sh "docker stop \$(docker ps -qa)" 
+                sh 'docker stop \$(docker ps -qa)'
 
                 echo '# 2) Deleting all of the containers'
-                sh "docker rm \$(docker ps -qa)"
+                sh 'docker rm \$(docker ps -qa)'
 
                 echo '# 3) Deleteing all of the images'
-                sh "docker rmi \$(docker images -qa)"
+                sh 'docker rmi \$(docker images -qa)'
 
                 echo '# 4) Deleteing all of the volumes'
-                sh "docker volume rm \$(docker volume ls -qf dangling=true)"
+                sh 'docker volume rm \$(docker volume ls -qf dangling=true)'
 
                 echo '# 5) Deleteing all of configurations like network'
                 sh 'docker system prune -f'
