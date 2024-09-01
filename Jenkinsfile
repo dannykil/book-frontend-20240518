@@ -32,7 +32,7 @@ pipeline {
 
         stage('docker initialize1') {
             steps {
-                dir('/root/docker') {
+                dir('/cicd/docker') {
                     echo '########## docker initialize using script in other folder ##########'
                     sh './reset-all.sh'
                 }
