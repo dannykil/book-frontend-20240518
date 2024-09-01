@@ -63,7 +63,7 @@ pipeline {
                 // sh "docker rmi \$(docker images -qa)"
                 // sh 'docker rmi \$(docker images -qa)'
                 // sh '''docker rmi \$(docker images -qa)'''
-                sh 'docker images'
+                sh 'sudo docker images'
 
                 echo '# 4) Deleteing all of the volumes'
                 sh 'docker volume rm \$(docker volume ls -qf dangling=true)'
