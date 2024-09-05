@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('git clone') {
+            steps {
+                echo 'git clone'
+                // git branch: 'master', credentialsId: 'credentail id', url: 'git repo에서 복사한 url'
+                git branch: 'master', url: 'https://github.com/dannykil/chart-book.git'
+            }
+         }
+         
+        stage('pod delete') {
+            steps {
+                dir('./templates') {
+                    sh 'pwd'
+                    sh 'ls -al'
+                    sh 'sudo kubectl get pods -A'
+                    sh 'sudo kubectl delete -n default pod book-frontend-pod-1'
+                }
+            }
+        }
+        
+        stage('pod create') {
+            steps {
+                dir('./templates') {
+                    sh 'sudo kubectl apply -f ./book-frontend-pod-1.yaml'
+                }
+            }
+        }
+    }
+}
