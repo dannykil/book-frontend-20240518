@@ -21,6 +21,7 @@ import CategoryListPage from './pages/settings/category/CategoryListPage';
 import CategoryReadPage from './pages/settings/category/CategoryReadPage';
 import CategoryEditPage from './pages/settings/category/CategoryEditPage';
 import ChatPage from './pages/settings/chat/ChatPage';
+import RoleListPage from './pages/settings/role/RoleListPage';
 // import debug from 'debug';
 // const authLogger = debug('auth');
 var debug = require('debug')('http'),
@@ -66,6 +67,11 @@ function App() {
           path="/settings/category"
           exact={true}
           element={<CategoryListPage />}
+        />
+        <Route
+          path="/settings/role"
+          exact={true}
+          element={<RoleListPage />}
         />
         <Route
           path="/settings/category/write"

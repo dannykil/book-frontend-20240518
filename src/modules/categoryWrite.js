@@ -16,6 +16,8 @@ const CHANGE_CATEGORY_NAME = 'category/CHANGE_CATEGORY_NAME';
 const CHANGE_CATEGORY_NOTE = 'category/CHANGE_CATEGORY_NOTE';
 const SET_ORIGINAL_CATEGORY = 'category/SET_ORIGINAL_CATEGORY';
 const UNLOAD_CATEGORY = 'category/UNLOAD_CATEGORY';
+const ADD_CATEGORY_DETAIL = 'category/ADD_CATEGORY_DETAIL';
+const CHANGE_CATEGORY_DETAIL_NAME = 'category/CHANGE_CATEGORY_DETAIL_NAME';
 
 // 2. 액션함수 생성
 export const writeCategory = createAction(
@@ -36,16 +38,6 @@ export const setOriginalCategory = createAction(
   (category) => category,
 );
 
-const writeCategorySaga = createRequestSaga(
-  WRITE_CATEGORY,
-  categoryAPI.writeCategory,
-);
-
-const editCategorySaga = createRequestSaga(
-  EDIT_CATEGORY,
-  categoryAPI.editCategory,
-);
-
 export const changeCategoryName = createAction(
   CHANGE_CATEGORY_NAME,
   ({ category, value }) => ({
@@ -62,6 +54,29 @@ export const changeCategoryNote = createAction(
   }),
 );
 
+export const addCategoryDetail = createAction(
+  ADD_CATEGORY_DETAIL,
+  ({ categoryDetailId, priority, categoryDetailName, categoryDetailNote }) => ({ categoryDetailId, priority, categoryDetailName, categoryDetailNote }),
+  // ({ category: { categoryDetails: [{ categoryDetailName, categoryDetailNote }] } }) => ({
+  //   category: { categoryDetails: [{ categoryDetailName, categoryDetailNote }] }
+  // }),
+);
+
+export const changeCategoryDetailName = createAction(
+  CHANGE_CATEGORY_DETAIL_NAME,
+  ({ categoryDetailName, value, priority }) => ({ categoryDetailName, value, priority }),
+);
+
+const writeCategorySaga = createRequestSaga(
+  WRITE_CATEGORY,
+  categoryAPI.writeCategory,
+);
+
+const editCategorySaga = createRequestSaga(
+  EDIT_CATEGORY,
+  categoryAPI.editCategory,
+);
+
 export function* categoryWriteSaga() {
   yield takeLatest(WRITE_CATEGORY, writeCategorySaga);
   yield takeLatest(EDIT_CATEGORY, editCategorySaga);
@@ -70,8 +85,8 @@ export function* categoryWriteSaga() {
 // 3. 초기값 설정
 const initialState = {
   // category: { categoryName: '', note: '', id: 0 },
-  category: { categoryName: null, note: null, id: null },
-  categoryDetails: [],
+  category: { id: null, categoryName: null, note: null, categoryDetails: [] },
+  // categoryDetails: [],
   error: null,
 };
 
@@ -80,16 +95,37 @@ const categoryWrite = handleActions(
   {
     [CHANGE_CATEGORY_NAME]: (state, { payload: { category, value } }) => ({
       ...state,
-      category: { categoryName: value, note: category.note, id: category.id },
+      category: { ...state.category, categoryName: value, note: category.note, id: category.id },
     }),
     [CHANGE_CATEGORY_NOTE]: (state, { payload: { category, value } }) => ({
       ...state,
       category: {
+        ...state.category,
         categoryName: category.categoryName,
         note: value,
         id: category.id,
       },
     }),
+    [ADD_CATEGORY_DETAIL]: (state, { payload: { categoryDetailId, priority, categoryDetailName, categoryDetailNote } }) => ({
+      // 1) 상태변화 없음
+      // ...state,
+      // category: { categoryDetails: [{ categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
+      // 2) category 하위에 기존 category 내용이 그대로 들어감
+      // category: { ...state, categoryDetails: [{ categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
+      // 3) ADD 버튼 클릭하면 오류남
+      // category: { categoryDetails: [...state, { categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
+      category: { ...state.category, categoryDetails: [...state.category.categoryDetails, { categoryDetailId: categoryDetailId, priority: priority, categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
+    }),
+    [CHANGE_CATEGORY_DETAIL_NAME]: (state, { payload: { categoryDetailName, value, priority } }) => ({
+      // [CHANGE_CATEGORY_DETAIL_NAME]: (state, action) => ({
+        // todos: state.todos.filter((todo) => todo.id !== action.payload),
+        // todos: state.todos.map((todo) =>
+        //   todo.id === action.payload ? { ...todo, done: !todo.done } : todo
+        // ),
+        ...state,
+        category: { ...state.category, categoryDetails: state.category.categoryDetails.map((categoryDetail) =>
+          categoryDetail.priority === priority ? { ...categoryDetail, categoryDetailName: value } : { ...categoryDetail } )}
+      }),
     [WRITE_CATEGORY]: (state) => ({
       ...state,
       category: null,

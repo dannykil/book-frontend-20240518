@@ -53,7 +53,7 @@ const Header3 = () => {
                     <NavDropdown.Item href="/settings/category">
                       Category
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="/role">Role</NavDropdown.Item>
+                    <NavDropdown.Item href="/settings/role">Role</NavDropdown.Item>
                     <NavDropdown.Item href="/chat">Chat</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="/user">User</NavDropdown.Item>

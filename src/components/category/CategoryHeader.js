@@ -15,6 +15,9 @@ const CategoryHeader = ({
   loading,
   onEdit,
   onPublish,
+  onAdd, 
+  // onAddCategoryDetail, 
+  // onAdd2, 
   onCancle,
   onDelete,
   filtering,
@@ -43,6 +46,10 @@ const CategoryHeader = ({
     console.log('CategoryHeader.js > loading : ', loading);
     return null;
   }
+
+  // const addCategoryDetail = (e) => {
+  //   onAddCategoryDetail({ categoryDetailName: '', categoryDetailNote: '' });
+  // };
 
   var title = null;
   var component = null;
@@ -113,6 +120,9 @@ const CategoryHeader = ({
           ) : (
             ''
           )}
+          <Button variant="primary" onClick={onAdd}>
+            Add
+          </Button>
         </Card.Body>
       </Card>
     </>

@@ -1,6 +1,7 @@
-import React from 'react';
-import { Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Alert, Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap';
 import categoryRead from '../../modules/categoryRead';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 const CategoryInfomation = ({
   category,
@@ -12,22 +13,9 @@ const CategoryInfomation = ({
   isEdit,
   onChangeField,
   onChangeCategoryName,
-  onChangeCategoryNote,
+  onChangeCategoryNote
 }) => {
   console.log('categoryInformation');
-  // console.log('category : ', category);
-  // console.log('categoryName : ', category.categoryName);
-  // console.log('isList : ', isList);
-  // console.log('isWrite : ', isWrite);
-  // console.log('isRead : ', isRead);
-  // console.log('isEdit : ', isEdit);
-  // const { id, categoryName, writer, writerCode, insertDT, note } = category; // 2024.04.13 데이터 검증작업 없이 위에 선언하면 에러발생(데이터 못읽음)
-
-  // const onChangeCategoryField = (e) => {
-  //   // console.log('Category Info : ' + e.target.value);
-  //   // onChangeField({ key: 'categoryName', value: e.target.value });
-  //   onChangeField({ category: category });
-  // };
 
   const onChangeCategory = (e) => {
     // console.log('Category Info : ' + e.target.value);

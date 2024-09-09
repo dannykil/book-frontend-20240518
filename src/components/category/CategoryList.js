@@ -24,7 +24,7 @@ const CategoryList = ({ categories, onRead, loading, pagination, search }) => {
               (category, i) =>
                 i + 1 >= pagination.startPage &&
                 i + 1 <= pagination.endPage &&
-                category.categoryName.includes(search.categoryName) &&
+                // category.categoryName.includes(search.categoryName) &&
                 category.insertDT >= search.insertDT,
               // && (category.insertDT >= search.insertDT && category.insertDT <= search.insertDT)
             )
