@@ -17,6 +17,7 @@ const CHANGE_CATEGORY_NOTE = 'category/CHANGE_CATEGORY_NOTE';
 const SET_ORIGINAL_CATEGORY = 'category/SET_ORIGINAL_CATEGORY';
 const UNLOAD_CATEGORY = 'category/UNLOAD_CATEGORY';
 const ADD_CATEGORY_DETAIL = 'category/ADD_CATEGORY_DETAIL';
+const REMOVE_CATEGORY_DETAIL = 'category/REMOVE_CATEGORY_DETAIL';
 const CHANGE_CATEGORY_DETAIL_NAME = 'category/CHANGE_CATEGORY_DETAIL_NAME';
 
 // 2. 액션함수 생성
@@ -60,6 +61,11 @@ export const addCategoryDetail = createAction(
   // ({ category: { categoryDetails: [{ categoryDetailName, categoryDetailNote }] } }) => ({
   //   category: { categoryDetails: [{ categoryDetailName, categoryDetailNote }] }
   // }),
+);
+
+export const removeCategoryDetail = createAction(
+  REMOVE_CATEGORY_DETAIL,
+  ({ priority }) => ({ priority }),
 );
 
 export const changeCategoryDetailName = createAction(
@@ -116,16 +122,24 @@ const categoryWrite = handleActions(
       // category: { categoryDetails: [...state, { categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
       category: { ...state.category, categoryDetails: [...state.category.categoryDetails, { categoryDetailId: categoryDetailId, priority: priority, categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
     }),
+    [REMOVE_CATEGORY_DETAIL]: (state, { payload: { priority } }) => ({
+      ...state,
+      category: {
+        ...state.category, categoryDetails: state.category.categoryDetails.filter((categoryDetail) => categoryDetail.priority !== priority)
+      }
+    }),
     [CHANGE_CATEGORY_DETAIL_NAME]: (state, { payload: { categoryDetailName, value, priority } }) => ({
       // [CHANGE_CATEGORY_DETAIL_NAME]: (state, action) => ({
-        // todos: state.todos.filter((todo) => todo.id !== action.payload),
-        // todos: state.todos.map((todo) =>
-        //   todo.id === action.payload ? { ...todo, done: !todo.done } : todo
-        // ),
-        ...state,
-        category: { ...state.category, categoryDetails: state.category.categoryDetails.map((categoryDetail) =>
-          categoryDetail.priority === priority ? { ...categoryDetail, categoryDetailName: value } : { ...categoryDetail } )}
-      }),
+      // todos: state.todos.filter((todo) => todo.id !== action.payload),
+      // todos: state.todos.map((todo) =>
+      //   todo.id === action.payload ? { ...todo, done: !todo.done } : todo
+      // ),
+      ...state,
+      category: {
+        ...state.category, categoryDetails: state.category.categoryDetails.map((categoryDetail) =>
+          categoryDetail.priority === priority ? { ...categoryDetail, categoryDetailName: value } : { ...categoryDetail })
+      }
+    }),
     [WRITE_CATEGORY]: (state) => ({
       ...state,
       category: null,

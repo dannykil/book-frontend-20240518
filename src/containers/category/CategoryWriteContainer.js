@@ -8,6 +8,7 @@ import {
   changeCategoryDetailName,
   changeCategoryName,
   changeCategoryNote,
+  removeCategoryDetail,
   writeCategory,
 } from '../../modules/categoryWrite';
 import CategoryHeader from '../../components/category/CategoryHeader';
@@ -87,6 +88,11 @@ const CategoryWriteContainer = () => {
     [dispatch],
   );
 
+  const onRemoveCategoryDetail = useCallback(
+    (payload) => dispatch(removeCategoryDetail(payload)),
+    [dispatch],
+  );
+
   const onChangeDetailName = (e) => {
     // console.log(e.target.value)
     // console.log(priority)
@@ -120,19 +126,17 @@ const CategoryWriteContainer = () => {
     setItems((items) => [
       ...items,
       {
-        // id: `${items.length}`, content: <Alert variant="light" onClose={() => setShow(false)} onChange={setRowNo(items.length)} dismissible>
         // id: `${items.length}`, content: <Alert variant="light" onClose={() => setShow(false)} onChange={() => {setPriority(priority+1); setCategoryDetailId(categoryDetailId+1);}} dismissible>
-        // id: `${items.length}`, content: <Alert variant="light" onClose={() => setShow(false)} onChange={setPriority(priority+1)} dismissible>
-        id: `${items.length}`, content: <Alert variant="light" onClose={() => setShow(false)} onChange={setPriority(priority+1)} dismissible>
+        id: `${items.length}`, content: <Alert variant="light" onClose={() => onRemoveCategoryDetail({ priority: priority })} onChange={setPriority(priority + 1)} dismissible>
           <Row className="g-2">
             <Col md>
               <FloatingLabel controlId="floatingInputGrid" label="Category Detail Name">
                 <Form.Control
                   type="input"
                   onChange={onChangeDetailName}
-                  // placeholder="Category Detail Name"
-                  // value={items.id}
-                  // value={items.length}
+                // placeholder="Category Detail Name"
+                // value={items.id}
+                // value={items.length}
                 />
               </FloatingLabel>
             </Col>
@@ -140,8 +144,8 @@ const CategoryWriteContainer = () => {
               <FloatingLabel controlId="floatingInputGrid" label="Category Detail Note">
                 <Form.Control
                   type="input"
-                  // onChange={onChangeCategoryDetailName}
-                  // placeholder="Input Category Detail Note"
+                // onChange={onChangeCategoryDetailName}
+                // placeholder="Input Category Detail Note"
                 // value={note}
                 />
               </FloatingLabel>
@@ -151,10 +155,12 @@ const CategoryWriteContainer = () => {
       },
       // setRowNo(items.length)
     ],
-    // onAddCategoryDetail({ rowNo: 0, categoryDetailName: '', categoryDetailNote: '' }) // 이상없음
-  );
-  onAddCategoryDetail({ categoryDetailId: categoryDetailId, priority: priority, categoryDetailName: '', categoryDetailNote: '' }); // 이상없음
+      // onAddCategoryDetail({ rowNo: 0, categoryDetailName: '', categoryDetailNote: '' }) // 이상없음
+    );
+    onAddCategoryDetail({ categoryDetailId: categoryDetailId, priority: priority, categoryDetailName: '', categoryDetailNote: '' }); // 이상없음
   }
+
+  const onRemove = () => { }
 
   // useEffect(() => {
   //   console.log('categoryWrite Response : ' + category);
