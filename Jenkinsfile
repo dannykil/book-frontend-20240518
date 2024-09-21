@@ -12,7 +12,7 @@ pipeline {
                     echo '########## project build ##########'
                     sh 'npm install' // npm install을 실행하고 
                     // sh 'CI=false npm run build' // npm run build를 실행한다.
-                    // sh 'npm install react-beautiful-dnd --save'
+                    sh 'npm install react-beautiful-dnd --save'
                 }
             }
         }
