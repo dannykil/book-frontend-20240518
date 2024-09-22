@@ -24,7 +24,7 @@ const CHANGE_CATEGORY_DETAIL_NAME = 'category/CHANGE_CATEGORY_DETAIL_NAME';
 export const writeCategory = createAction(
   WRITE_CATEGORY,
   // ({ category }) => ({ category }),
-  ({ categoryName, note }) => ({ categoryName, note }),
+  ({ categoryName, note, categoryDetailDto }) => ({ categoryName, note, categoryDetailDto }),
 );
 
 export const categoryWriteUnload = createAction(UNLOAD_CATEGORY);
@@ -57,9 +57,9 @@ export const changeCategoryNote = createAction(
 
 export const addCategoryDetail = createAction(
   ADD_CATEGORY_DETAIL,
-  ({ categoryDetailId, priority, categoryDetailName, categoryDetailNote }) => ({ categoryDetailId, priority, categoryDetailName, categoryDetailNote }),
-  // ({ category: { categoryDetails: [{ categoryDetailName, categoryDetailNote }] } }) => ({
-  //   category: { categoryDetails: [{ categoryDetailName, categoryDetailNote }] }
+  ({ categoryDetailId, categoryId, priority, categoryDetailName, categoryDetailNote }) => ({ categoryDetailId, categoryId, priority, categoryDetailName, categoryDetailNote }),
+  // ({ category: { categoryDetailDto: [{ categoryDetailName, categoryDetailNote }] } }) => ({
+  //   category: { categoryDetailDto: [{ categoryDetailName, categoryDetailNote }] }
   // }),
 );
 
@@ -91,8 +91,8 @@ export function* categoryWriteSaga() {
 // 3. 초기값 설정
 const initialState = {
   // category: { categoryName: '', note: '', id: 0 },
-  category: { id: null, categoryName: null, note: null, categoryDetails: [] },
-  // categoryDetails: [],
+  category: { id: null, categoryName: null, note: null, categoryDetailDto: [] },
+  // categoryDetailDto: [],
   error: null,
 };
 
@@ -112,20 +112,20 @@ const categoryWrite = handleActions(
         id: category.id,
       },
     }),
-    [ADD_CATEGORY_DETAIL]: (state, { payload: { categoryDetailId, priority, categoryDetailName, categoryDetailNote } }) => ({
+    [ADD_CATEGORY_DETAIL]: (state, { payload: { categoryDetailId, categoryId, priority, categoryDetailName, categoryDetailNote } }) => ({
       // 1) 상태변화 없음
       // ...state,
-      // category: { categoryDetails: [{ categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
+      // category: { categoryDetailDto: [{ categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
       // 2) category 하위에 기존 category 내용이 그대로 들어감
-      // category: { ...state, categoryDetails: [{ categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
+      // category: { ...state, categoryDetailDto: [{ categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
       // 3) ADD 버튼 클릭하면 오류남
-      // category: { categoryDetails: [...state, { categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
-      category: { ...state.category, categoryDetails: [...state.category.categoryDetails, { categoryDetailId: categoryDetailId, priority: priority, categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
+      // category: { categoryDetailDto: [...state, { categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
+      category: { ...state.category, categoryDetailDto: [...state.category.categoryDetailDto, { categoryDetailId: categoryDetailId, categoryId: categoryId, priority: priority, categoryDetailName: categoryDetailName, categoryDetailNote: categoryDetailNote }] }
     }),
     [REMOVE_CATEGORY_DETAIL]: (state, { payload: { priority } }) => ({
       ...state,
       category: {
-        ...state.category, categoryDetails: state.category.categoryDetails.filter((categoryDetail) => categoryDetail.priority !== priority)
+        ...state.category, categoryDetailDto: state.category.categoryDetailDto.filter((categoryDetail) => categoryDetail.priority !== priority)
       }
     }),
     [CHANGE_CATEGORY_DETAIL_NAME]: (state, { payload: { categoryDetailName, value, priority } }) => ({
@@ -136,7 +136,7 @@ const categoryWrite = handleActions(
       // ),
       ...state,
       category: {
-        ...state.category, categoryDetails: state.category.categoryDetails.map((categoryDetail) =>
+        ...state.category, categoryDetailDto: state.category.categoryDetailDto.map((categoryDetail) =>
           categoryDetail.priority === priority ? { ...categoryDetail, categoryDetailName: value } : { ...categoryDetail })
       }
     }),

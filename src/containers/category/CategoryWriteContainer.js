@@ -1,7 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import { Alert, Col, FloatingLabel, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import CategoryHeader from '../../components/category/CategoryHeader';
 import CategoryInfomation from '../../components/category/CategoryInfomation';
+import CategoryInfomationDetail from '../../components/category/CategoryInfomationDetail';
+import { categoryListAction } from '../../modules/categoryList';
 import {
   addCategoryDetail,
   categoryWriteUnload,
@@ -11,10 +15,6 @@ import {
   removeCategoryDetail,
   writeCategory,
 } from '../../modules/categoryWrite';
-import CategoryHeader from '../../components/category/CategoryHeader';
-import { categoryListAction } from '../../modules/categoryList';
-import { Alert, Col, FloatingLabel, Form, Row } from 'react-bootstrap';
-import CategoryInfomationDetail from '../../components/category/CategoryInfomationDetail';
 
 const CategoryWriteContainer = () => {
   const dispatch = useDispatch();
@@ -104,12 +104,23 @@ const CategoryWriteContainer = () => {
     [dispatch],
   );
 
+  // const onChangeDetailNote = (e) => {
+  //   onChangeCategoryDetailName({ category: category, value: e.target.value, priority: priority });
+  // };
+
+  // const onChangeCategoryDetailNote = useCallback(
+  //   (payload) => dispatch(changeCategoryDetailName(payload)),
+  //   [dispatch],
+  // );
+
   const onPublish = () => {
-    const { categoryName, note } = category;
+    const { categoryName, note, categoryDetailDto } = category;
+    // console.log('categoryDetailDto : ', categoryDetailDto)
     dispatch(
       writeCategory({
         categoryName,
         note,
+        categoryDetailDto
       }),
     );
     dispatch(categoryWriteUnload());
@@ -157,10 +168,8 @@ const CategoryWriteContainer = () => {
     ],
       // onAddCategoryDetail({ rowNo: 0, categoryDetailName: '', categoryDetailNote: '' }) // 이상없음
     );
-    onAddCategoryDetail({ categoryDetailId: categoryDetailId, priority: priority, categoryDetailName: '', categoryDetailNote: '' }); // 이상없음
+    onAddCategoryDetail({ categoryDetailId: categoryDetailId, categoryId: 0, priority: priority, categoryDetailName: '', categoryDetailNote: '' }); // 이상없음
   }
-
-  const onRemove = () => { }
 
   // useEffect(() => {
   //   console.log('categoryWrite Response : ' + category);

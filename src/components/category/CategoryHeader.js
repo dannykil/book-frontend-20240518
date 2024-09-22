@@ -16,7 +16,7 @@ const CategoryHeader = ({
   onEdit,
   onPublish,
   onAdd, 
-  // onAddCategoryDetail, 
+  onAddCategoryDetail, 
   // onAdd2, 
   onCancle,
   onDelete,
@@ -47,9 +47,10 @@ const CategoryHeader = ({
     return null;
   }
 
-  // const addCategoryDetail = (e) => {
-  //   onAddCategoryDetail({ categoryDetailName: '', categoryDetailNote: '' });
-  // };
+  const addCategoryDetail = (e) => {
+    // onAddCategoryDetail({ categoryDetailName: '', categoryDetailNote: '' });
+    onAddCategoryDetail({ categoryDetailName: '', categoryDetailNote: '' });
+  };
 
   var title = null;
   var component = null;

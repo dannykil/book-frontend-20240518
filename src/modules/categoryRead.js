@@ -22,8 +22,8 @@ export function* categoryReadSaga() {
 }
 
 const initialState = {
-  category: null,
-  categoryDetails: [],
+  // category: null,
+  category: { id: null, categoryName: null, note: null, categoryDetailDto: [] },
   error: null,
 };
 

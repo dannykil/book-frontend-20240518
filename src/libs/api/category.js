@@ -10,8 +10,8 @@ export const listCategory = (page) => {
   return client.get('/api/category');
 };
 
-export const writeCategory = ({ categoryName, note }) =>
-  client.post('/api/category', { categoryName, note });
+export const writeCategory = ({ categoryName, note, categoryDetailDto }) =>
+  client.post('/api/category', { categoryName, note, categoryDetailDto });
 
 // export const writeCategory = ({ category }) =>
 //   client.post('/api/category', { category });

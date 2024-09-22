@@ -58,7 +58,7 @@ const CategoryInfomation = ({
                 <Form.Control
                   type="input"
                   placeholder="Category"
-                  value={categoryName}
+                  value={categoryName || ''} // `input` should not be null
                   disabled
                 />
               ) : isEdit ? (
@@ -66,7 +66,7 @@ const CategoryInfomation = ({
                   type="input"
                   placeholder="Category"
                   onChange={onChangeCategory}
-                  value={categoryName}
+                  value={categoryName || ''}
                 />
               ) : (
                 <Form.Control
@@ -83,7 +83,7 @@ const CategoryInfomation = ({
                 <Form.Control
                   type="input"
                   placeholder="note"
-                  value={note}
+                  value={note || ''}
                   disabled
                 />
               ) : isEdit ? (
@@ -91,7 +91,7 @@ const CategoryInfomation = ({
                   type="input"
                   placeholder="note"
                   onChange={onChangeNote}
-                  value={note}
+                  value={note || ''}
                 />
               ) : (
                 <Form.Control

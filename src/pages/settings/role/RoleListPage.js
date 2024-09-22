@@ -29,7 +29,7 @@ const RoleListPage = () => {
         console.log('>>> _items', _items);
         // 기존 아이템 뽑아내기
         const [targetItem] = _items.splice(source.index, 1);
-        console.log('>>> targetItem', targetItem);
+        console.log('>>> targetItem', _items);
         // 기존 아이템을 새로운 위치에 삽입하기
         _items.splice(destination.index, 0, targetItem);
         // 상태 변경

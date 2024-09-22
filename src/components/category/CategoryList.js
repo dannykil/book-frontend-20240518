@@ -19,7 +19,7 @@ const CategoryList = ({ categories, onRead, loading, pagination, search }) => {
     <>
       {!loading && categories && (
         <div>
-          {categories
+          {categories.data
             .filter(
               (category, i) =>
                 i + 1 >= pagination.startPage &&
